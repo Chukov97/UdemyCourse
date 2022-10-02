@@ -36,4 +36,3 @@ number_list_new.append(letter_list)
 
 print(number_list_new)
 print(letter_list)
-
