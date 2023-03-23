@@ -1,4 +1,5 @@
 from functools import wraps
+from time import sleep
 
 
 # def check_if_first_arg_is(val):
@@ -27,24 +28,44 @@ from functools import wraps
 # print_rainbow_colors('black', 'red', 'green', 'blue', 'indigo')
 # print(mult_seven(8, 3))
 
-def enforce(*types):
+# def enforce(*types):
+#     def inner_dec(func):
+#         @wraps(func)
+#         def wrapper(*args, **kwargs):
+#             new_args = []
+#             for a, t in zip(args, types):
+#                 new_args.append(t(a))
+#             return func(*new_args)
+#
+#         return wrapper
+#
+#     return inner_dec
+#
+#
+# @enforce(str, int)
+# def print_text_n_times(text, n):
+#     for number in range(n):
+#         print(text)
+#
+#
+# print_text_n_times('Hello', '3')
+
+def wait(n):
     def inner_dec(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            new_args = []
-            for a, t in zip(args, types):
-                new_args.append(t(a))
-            return func(*new_args)
+            sleep(n)
+            print("There was a pause {} seconds before execution {}".format(n, func.__name__))
+            return func(*args, **kwargs)
 
         return wrapper
 
     return inner_dec
 
 
-@enforce(str, int)
-def print_text_n_times(text, n):
-    for number in range(n):
-        print(text)
+@wait(3)
+def some_func():
+    return 'Foo'
 
 
-print_text_n_times('Hello', '3')
+print(some_func())
